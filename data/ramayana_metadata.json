@@ -1,0 +1,78 @@
+{
+  "title": "Ramayana",
+  "source_type": "indian_mythology",
+  "cultural_origin": "Ancient India",
+  "core_themes": [
+    "dharma (righteousness)",
+    "loyalty",
+    "exile",
+    "love and partnership",
+    "good vs evil",
+    "redemption"
+  ],
+  "main_characters": [
+    {
+      "name": "Rama",
+      "role": "Protagonist/Prince",
+      "traits": ["righteous", "principled", "dutiful", "compassionate"],
+      "motivation": "Uphold dharma at all costs"
+    },
+    {
+      "name": "Sita",
+      "role": "Partner/Princess",
+      "traits": ["intelligent", "strong-willed", "devoted", "resilient"],
+      "motivation": "Support dharma and partnership"
+    },
+    {
+      "name": "Ravana",
+      "role": "Antagonist/King",
+      "traits": ["intelligent", "ambitious", "powerful", "arrogant"],
+      "motivation": "Desire and conquest"
+    },
+    {
+      "name": "Hanuman",
+      "role": "Loyal Ally",
+      "traits": ["devoted", "strong", "intelligent", "humble"],
+      "motivation": "Serve righteousness through action"
+    },
+    {
+      "name": "Lakshmana",
+      "role": "Brother/Companion",
+      "traits": ["loyal", "protective", "brave", "devoted"],
+      "motivation": "Unwavering brotherhood"
+    }
+  ],
+  "plot_structure": {
+    "act_1": {
+      "name": "The Exile",
+      "key_events": [
+        "Rama set to become king",
+        "Court intrigue forces exile",
+        "Rama, Sita, Lakshmana leave kingdom"
+      ],
+      "emotional_arc": "Loss and sacrifice"
+    },
+    "act_2": {
+      "name": "The Abduction",
+      "key_events": [
+        "Life in exile/forest",
+        "Ravana abducts Sita",
+        "Rama meets Hanuman",
+        "Building alliance"
+      ],
+      "emotional_arc": "Separation and determination"
+    },
+    "act_3": {
+      "name": "The War and Return",
+      "key_events": [
+        "Bridge to Lanka",
+        "Epic battle",
+        "Sita's rescue",
+        "Return and coronation"
+      ],
+      "emotional_arc": "Triumph and reunion"
+    }
+  },
+  "core_conflict": "Can righteousness prevail against powerful forces of desire and ego?",
+  "resolution_theme": "Dharma ultimately triumphs, but at great personal cost"
+}

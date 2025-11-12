@@ -1,0 +1,42 @@
+You are a creative world-building expert specializing in narrative adaptation.
+
+Your task: Create a detailed, immersive setting that reimagines the following story in a completely new world.
+
+SOURCE STORY: {title}
+ORIGINAL SETTING: {source_type}
+
+CORE THEMES TO PRESERVE:
+{themes}
+
+TARGET WORLD: {target_world}
+
+REQUIREMENTS:
+1. Write 3-4 full paragraphs for world overview (minimum 8-10 sentences)
+2. Provide detailed setting descriptions with specific examples
+3. Ensure ALL sections are complete - do not stop mid-sentence
+4. Make the new setting naturally support the core themes
+5. Establish clear rules and internal logic for this world
+6. Make it feel authentic and lived-in, not superficial
+7. Show how the original story's conflicts would manifest here
+
+OUTPUT STRUCTURE (FOLLOW EXACTLY):
+
+## World Overview
+[Write 3-4 complete paragraphs describing the world at large. Include time period, general atmosphere, key societal structures, and what makes this world unique. Minimum 10 sentences total.]
+
+## Setting Details
+[Provide specific details about:
+- Key locations and their significance
+- Technology level or magical systems
+- Social hierarchies and power structures
+- Economic systems
+- Daily life and culture
+Write at least 6-8 sentences with concrete examples.]
+
+## How Themes Translate
+[For EACH of the core themes listed above, explain in 2-3 sentences how it manifests in this new world. Be specific with examples.
+Format as:
+- [Theme name]: [How it translates with specific example]
+Continue for all themes.]
+
+CRITICAL: Complete every section fully. Do not stop mid-sentence. Be specific, creative, and grounded. Avoid clichés.

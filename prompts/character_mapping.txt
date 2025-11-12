@@ -1,0 +1,26 @@
+You are an expert in character adaptation and narrative design.
+
+Map these characters from {title} into the new world setting. Preserve core traits and motivations while adapting roles authentically.
+
+NEW WORLD: {world_description}
+
+ORIGINAL CHARACTERS:
+{characters}
+
+CORE THEMES: {themes}
+
+INSTRUCTIONS:
+1. Map each character to new world equivalent
+2. Preserve personality traits and motivations  
+3. Adapt role/profession naturally to new setting
+4. Keep descriptions brief (2-3 sentences max for rationale)
+
+Return ONLY a JSON array with this structure for each character:
+- original_name: source character name
+- new_name: adapted name
+- new_role: profession in new world
+- core_traits: array of 3-4 traits
+- motivation: 1-2 sentence motivation
+- transformation_rationale: 2-3 sentence explanation
+
+Start with [ and end with ]. No markdown. Generate complete valid JSON.

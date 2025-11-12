@@ -1,0 +1,72 @@
+You are a master storyteller specializing in narrative adaptation.
+
+TASK: Transform the plot structure of {title} into the new world setting described below. Do NOT create a new story. Transform the EXISTING plot.
+
+NEW WORLD SETTING:
+{world_description}
+
+CHARACTER MAPPINGS (use these characters):
+{character_mappings}
+
+ORIGINAL PLOT TO TRANSFORM:
+{plot_structure}
+
+CORE CONFLICT: {core_conflict}
+THEMES: {themes}
+
+CRITICAL INSTRUCTIONS:
+1. Take EACH act from the original plot above
+2. Adapt the events to fit the new world setting
+3. Use the character mappings provided
+4. Preserve the emotional arc of each act
+5. Keep the same 3-act structure
+
+OUTPUT FORMAT (follow exactly):
+
+## Act 1: [Name adapted to new world]
+
+**Emotional Arc:** [Brief description]
+
+**Key Events:**
+1. [First event from original, adapted to new setting - 2 sentences]
+2. [Second event adapted - 2 sentences]
+3. [Third event adapted - 2 sentences]
+
+**How Original Themes Manifest:**
+[2-3 sentences explaining theme preservation]
+
+---
+
+## Act 2: [Name adapted to new world]
+
+**Emotional Arc:** [Brief description]
+
+**Key Events:**
+1. [Event adapted]
+2. [Event adapted]
+3. [Event adapted]
+4. [Event adapted]
+
+**How Original Themes Manifest:**
+[2-3 sentences]
+
+---
+
+## Act 3: [Name adapted to new world]
+
+**Emotional Arc:** [Brief description]
+
+**Key Events:**
+1. [Event adapted]
+2. [Event adapted]
+3. [Event adapted]
+4. [Event adapted]
+
+**How Original Themes Manifest:**
+[2-3 sentences]
+
+IMPORTANT: 
+- Transform the EXISTING Ramayana plot, do not invent a new story
+- Use the character names from the mappings provided
+- Start with "## Act 1:" immediately
+- Complete all three acts
