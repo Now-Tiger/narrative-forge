@@ -71,8 +71,16 @@ narrative-forge/
 
 **Source:** Ramayana (Indian Epic)  
 **Target:** Silicon Valley Tech Startup  
-**Output:** The Silicon Exile - A tale of corporate ethics, loyalty, and redemption
+**Output:** The Silicon Exile - A tale of corporate ethics, loyalty, and redemption [here](/output/reimagined_story.md)
 
 ---
 
 Built for Pratilipi AI Engineer Take-Home Assignment
+
+---
+
+## 🧑‍💻 Author
+
+**Swapnil Narwade**
+_Backend Engineer & AI Developer_
+🌐 [GitHub](https://github.com/Now-Tiger) • 🧠 [LinkedIn](https://www.linkedin.com/in/now-tiger)
