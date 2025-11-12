@@ -371,11 +371,6 @@ if __name__ == "__main__":
 
     from utils.extractor import extract_story_elements
 
-    # Save output in the output folder as a markdown
-    OUTPUT_DIR = Path("output")
-    FILE_NAME = "ramayana_x_silicon_valley_ninth"
-    outputfile = OUTPUT_DIR / f'{FILE_NAME}.md'
-
     console = Console()
 
     console.print("\n[bold cyan]🌍 World Builder Test[/bold cyan]\n")
@@ -405,17 +400,10 @@ if __name__ == "__main__":
             border_style="cyan"
         ))
 
-        if OUTPUT_DIR.exists():
-            console.print(f"[yellow]Step 3:[/yellow] Saving output at {OUTPUT_DIR}/...")
-            with open(outputfile, 'w', encoding='utf-8') as f:
-                f.write(world.full_description)
-
-            console.print("[bold green]✓[/bold green] Done!")
-
         console.print("\n[bold green]✓ World Builder working correctly![/bold green]\n")
 
         # Step 3: Map characters
-        console.print("[yellow]Step 4:[/yellow] Mapping characters to new world...")
+        console.print("[yellow]Step 3:[/yellow] Mapping characters to new world...")
         console.print("[dim]This may take 15-20 seconds...[/dim]\n")
         
         mappings = map_characters(
@@ -480,11 +468,6 @@ if __name__ == "__main__":
                 border_style="cyan"
             ))
             console.print()
-
-        if OUTPUT_DIR.exists():
-            with open('plot_transformer_first_test_output.md', 'w', encoding='utf-8') as f:
-                for act in acts:
-                    f.write(act.model_dump_json())
 
         console.print("[bold green]✓ Plot Transformer working correctly![/bold green]\n")
 
