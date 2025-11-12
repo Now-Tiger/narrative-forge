@@ -8,93 +8,93 @@ This document provides visual representations of the Narrative Transformation Sy
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     NARRATIVE TRANSFORMATION SYSTEM              │
+│                 NARRATIVE TRANSFORMATION SYSTEM                 │
 └─────────────────────────────────────────────────────────────────┘
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  INPUT: Source Story Name + Target World Description            │
-│  Example: "ramayana" + "Silicon Valley tech startup"            │
+│      INPUT: Source Story Name + Target World Description        │
+│      Example: "ramayana" + "Silicon Valley tech startup"        │
 └─────────────────────────────────────────────────────────────────┘
                                   │
                                   ▼
-        ┌─────────────────────────────────────────────┐
-        │   PHASE 1: DATA EXTRACTION                  │
-        │   Component: utils/extractor.py             │
-        │   ┌─────────────────────────────────────┐   │
-        │   │ • Load ramayana_metadata.json       │   │
-        │   │ • Parse characters, themes, plot    │   │
-        │   │ • Create Pydantic models            │   │
-        │   │ Output: StoryElements object        │   │
-        │   └─────────────────────────────────────┘   │
-        └─────────────────────────────────────────────┘
+          ┌─────────────────────────────────────────────┐
+          │   PHASE 1: DATA EXTRACTION                  │
+          │   Component: utils/extractor.py             │
+          │   ┌─────────────────────────────────────┐   │
+          │   │ • Load ramayana_metadata.json       │   │
+          │   │ • Parse characters, themes, plot    │   │
+          │   │ • Create Pydantic models            │   │
+          │   │ Output: StoryElements object        │   │
+          │   └─────────────────────────────────────┘   │
+          └─────────────────────────────────────────────┘
                                   │
                                   ▼
-        ┌─────────────────────────────────────────────┐
-        │   PHASE 2: WORLD GENERATION                 │
-        │   Component: utils/transformer.py           │
-        │   ┌─────────────────────────────────────┐   │
-        │   │ • Load prompts/world_building.txt   │   │
-        │   │ • Format with story themes          │   │
-        │   │ • Call Gemini LLM (temp=0.8)        │   │
-        │   │ • Parse & clean response            │   │
-        │   │ Output: WorldSetting object         │   │
-        │   └─────────────────────────────────────┘   │
-        └─────────────────────────────────────────────┘
+          ┌─────────────────────────────────────────────┐
+          │   PHASE 2: WORLD GENERATION                 │
+          │   Component: utils/transformer.py           │
+          │   ┌─────────────────────────────────────┐   │
+          │   │ • Load prompts/world_building.txt   │   │
+          │   │ • Format with story themes          │   │
+          │   │ • Call Gemini LLM (temp=0.8)        │   │
+          │   │ • Parse & clean response            │   │
+          │   │ Output: WorldSetting object         │   │
+          │   └─────────────────────────────────────┘   │
+          └─────────────────────────────────────────────┘
                                   │
                                   ▼
-        ┌─────────────────────────────────────────────┐
-        │   PHASE 3: CHARACTER MAPPING                │
-        │   Component: utils/transformer.py           │
-        │   ┌─────────────────────────────────────┐   │
-        │   │ • Load prompts/character_mapping.txt│   │
-        │   │ • Format with world + characters    │   │
-        │   │ • Request JSON output from LLM      │   │
-        │   │ • Parse JSON, validate structure    │   │
-        │   │ • Retry if parsing fails            │   │
-        │   │ Output: List[CharacterMapping]      │   │
-        │   └─────────────────────────────────────┘   │
-        └─────────────────────────────────────────────┘
+          ┌─────────────────────────────────────────────┐
+          │   PHASE 3: CHARACTER MAPPING                │
+          │   Component: utils/transformer.py           │
+          │   ┌─────────────────────────────────────┐   │
+          │   │ • Load prompts/character_mapping.txt│   │
+          │   │ • Format with world + characters    │   │
+          │   │ • Request JSON output from LLM      │   │
+          │   │ • Parse JSON, validate structure    │   │
+          │   │ • Retry if parsing fails            │   │
+          │   │ Output: List[CharacterMapping]      │   │
+          │   └─────────────────────────────────────┘   │
+          └─────────────────────────────────────────────┘
                                   │
                                   ▼
-        ┌─────────────────────────────────────────────┐
-        │   PHASE 4: PLOT TRANSFORMATION              │
-        │   Component: utils/transformer.py           │
-        │   ┌─────────────────────────────────────┐   │
-        │   │ • Load prompts/plot_transformation  │   │
-        │   │ • Format with all context           │   │
-        │   │ • Generate adapted plot events      │   │
-        │   │ • Parse acts using regex            │   │
-        │   │ • Validate 3-act structure          │   │
-        │   │ Output: List[TransformedPlotAct]    │   │
-        │   └─────────────────────────────────────┘   │
-        └─────────────────────────────────────────────┘
+          ┌─────────────────────────────────────────────┐
+          │   PHASE 4: PLOT TRANSFORMATION              │
+          │   Component: utils/transformer.py           │
+          │   ┌─────────────────────────────────────┐   │
+          │   │ • Load prompts/plot_transformation  │   │
+          │   │ • Format with all context           │   │
+          │   │ • Generate adapted plot events      │   │
+          │   │ • Parse acts using regex            │   │
+          │   │ • Validate 3-act structure          │   │
+          │   │ Output: List[TransformedPlotAct]    │   │
+          │   └─────────────────────────────────────┘   │
+          └─────────────────────────────────────────────┘
                                   │
                                   ▼
-        ┌─────────────────────────────────────────────┐
-        │   PHASE 5: CONSISTENCY VALIDATION ⭐        │
-        │   Component: utils/validator.py             │
-        │   ┌─────────────────────────────────────┐   │
-        │   │ • Character name consistency        │   │
-        │   │ • Theme preservation check          │   │
-        │   │ • World-plot alignment              │   │
-        │   │ • Narrative structure validation    │   │
-        │   │ Output: ConsistencyReport           │   │
-        │   └─────────────────────────────────────┘   │
-        └─────────────────────────────────────────────┘
+          ┌─────────────────────────────────────────────┐
+          │   PHASE 5: CONSISTENCY VALIDATION ⭐        │
+          │   Component: utils/validator.py             │
+          │   ┌─────────────────────────────────────┐   │
+          │   │ • Character name consistency        │   │
+          │   │ • Theme preservation check          │   │
+          │   │ • World-plot alignment              │   │
+          │   │ • Narrative structure validation    │   │
+          │   │ Output: ConsistencyReport           │   │
+          │   └─────────────────────────────────────┘   │
+          └─────────────────────────────────────────────┘
                                   │
                                   ▼
-        ┌─────────────────────────────────────────────┐
-        │   PHASE 6: OUTPUT ASSEMBLY                  │
-        │   Component: utils/assembler.py             │
-        │   ┌─────────────────────────────────────┐   │
-        │   │ • Combine all components            │   │
-        │   │ • Format markdown document          │   │
-        │   │ • Add metadata & timestamps         │   │
-        │   │ • Save to output/                   │   │
-        │   │ Output: reimagined_story.md         │   │
-        │   └─────────────────────────────────────┘   │
-        └─────────────────────────────────────────────┘
+          ┌─────────────────────────────────────────────┐
+          │   PHASE 6: OUTPUT ASSEMBLY                  │
+          │   Component: utils/assembler.py             │
+          │   ┌─────────────────────────────────────┐   │
+          │   │ • Combine all components            │   │
+          │   │ • Format markdown document          │   │
+          │   │ • Add metadata & timestamps         │   │
+          │   │ • Save to output/                   │   │
+          │   │ Output: reimagined_story.md         │   │
+          │   └─────────────────────────────────────┘   │
+          └─────────────────────────────────────────────┘
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────┐
@@ -118,17 +118,17 @@ This document provides visual representations of the Narrative Transformation Sy
        ▼
 ┌────────────────────────────────────────────────────────────┐
 │  EXTRACTOR                                                 │
-│  ┌──────────────────────────────────────────────────────┐ │
-│  │  load_story_metadata("ramayana")                     │ │
-│  │         ↓                                            │ │
-│  │  Read: data/ramayana_metadata.json                   │ │
-│  │         ↓                                            │ │
-│  │  Parse JSON → Pydantic Models                        │ │
-│  │  • Character(name, role, traits, motivation)         │ │
-│  │  • PlotAct(name, events, emotional_arc)              │ │
-│  │         ↓                                            │ │
-│  │  Return: StoryElements                               │ │
-│  └──────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  load_story_metadata("ramayana")                     │  │
+│  │         ↓                                            │  │
+│  │  Read: data/ramayana_metadata.json                   │  │
+│  │         ↓                                            │  │
+│  │  Parse JSON → Pydantic Models                        │  │
+│  │  • Character(name, role, traits, motivation)         │  │
+│  │  • PlotAct(name, events, emotional_arc)              │  │
+│  │         ↓                                            │  │
+│  │  Return: StoryElements                               │  │
+│  └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
        │
        │ StoryElements object
@@ -136,29 +136,29 @@ This document provides visual representations of the Narrative Transformation Sy
        ▼
 ┌────────────────────────────────────────────────────────────┐
 │  WORLD BUILDER                                             │
-│  ┌──────────────────────────────────────────────────────┐ │
-│  │  generate_new_setting(elements, target_world)        │ │
-│  │         ↓                                            │ │
-│  │  Load: prompts/world_building.txt                    │ │
-│  │         ↓                                            │ │
-│  │  Replace placeholders:                               │ │
-│  │    {title} → "Ramayana"                              │ │
-│  │    {themes} → "dharma, loyalty, exile..."            │ │
-│  │    {target_world} → "tech startup ecosystem"         │ │
-│  │         ↓                                            │ │
-│  │  ┌──────────────────────────────────────┐            │ │
-│  │  │  Gemini LLM API Call                 │            │ │
-│  │  │  • Model: gemini-2.0-flash-exp       │            │ │
-│  │  │  • Temperature: 0.8 (creative)       │            │ │
-│  │  │  • Max Tokens: 4096                  │            │ │
-│  │  └──────────────────────────────────────┘            │ │
-│  │         ↓                                            │ │
-│  │  Clean incomplete sentences                          │ │
-│  │         ↓                                            │ │
-│  │  Parse sections (overview, details, themes)          │ │
-│  │         ↓                                            │ │
-│  │  Return: WorldSetting                                │ │
-│  └──────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  generate_new_setting(elements, target_world)        │  │
+│  │         ↓                                            │  │
+│  │  Load: prompts/world_building.txt                    │  │
+│  │         ↓                                            │  │
+│  │  Replace placeholders:                               │  │
+│  │    {title} → "Ramayana"                              │  │
+│  │    {themes} → "dharma, loyalty, exile..."            │  │
+│  │    {target_world} → "tech startup ecosystem"         │  │
+│  │         ↓                                            │  │
+│  │  ┌──────────────────────────────────────┐            │  │
+│  │  │  Gemini LLM API Call                 │            │  │
+│  │  │  • Model: gemini-2.0-flash-exp       │            │  │
+│  │  │  • Temperature: 0.8 (creative)       │            │  │
+│  │  │  • Max Tokens: 4096                  │            │  │
+│  │  └──────────────────────────────────────┘            │  │
+│  │         ↓                                            │  │
+│  │  Clean incomplete sentences                          │  │
+│  │         ↓                                            │  │
+│  │  Parse sections (overview, details, themes)          │  │
+│  │         ↓                                            │  │
+│  │  Return: WorldSetting                                │  │
+│  └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
        │
        │ WorldSetting object
@@ -166,33 +166,33 @@ This document provides visual representations of the Narrative Transformation Sy
        ▼
 ┌────────────────────────────────────────────────────────────┐
 │  CHARACTER MAPPER                                          │
-│  ┌──────────────────────────────────────────────────────┐ │
-│  │  map_characters(elements, world)                     │ │
-│  │         ↓                                            │ │
-│  │  Load: prompts/character_mapping.txt                 │ │
-│  │         ↓                                            │ │
-│  │  Format context:                                     │ │
-│  │    • World description (overview + details)          │ │
-│  │    • Character summaries from elements               │ │
-│  │         ↓                                            │ │
-│  │  ┌──────────────────────────────────────┐            │ │
-│  │  │  Gemini LLM API Call                 │            │ │
-│  │  │  • Temperature: 0.7                  │            │ │
-│  │  │  • Max Tokens: 6000                  │            │ │
-│  │  │  • Format: JSON output               │            │ │
-│  │  └──────────────────────────────────────┘            │ │
-│  │         ↓                                            │ │
-│  │  Clean markdown wrappers (```json)                   │ │
-│  │         ↓                                            │ │
-│  │  Parse JSON → List of dicts                          │ │
-│  │         ↓                                            │ │
-│  │  Validate & convert to Pydantic models               │ │
-│  │         ↓                                            │ │
-│  │  If parsing fails:                                   │ │
-│  │    • Retry with temp=0.5 (more structured)           │ │
-│  │         ↓                                            │ │
-│  │  Return: List[CharacterMapping]                      │ │
-│  └──────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  map_characters(elements, world)                     │  │
+│  │         ↓                                            │  │
+│  │  Load: prompts/character_mapping.txt                 │  │
+│  │         ↓                                            │  │
+│  │  Format context:                                     │  │
+│  │    • World description (overview + details)          │  │
+│  │    • Character summaries from elements               │  │
+│  │         ↓                                            │  │
+│  │  ┌──────────────────────────────────────┐            │  │
+│  │  │  Gemini LLM API Call                 │            │  │
+│  │  │  • Temperature: 0.7                  │            │  │
+│  │  │  • Max Tokens: 6000                  │            │  │
+│  │  │  • Format: JSON output               │            │  │
+│  │  └──────────────────────────────────────┘            │  │
+│  │         ↓                                            │  │
+│  │  Clean markdown wrappers (```json)                   │  │
+│  │         ↓                                            │  │
+│  │  Parse JSON → List of dicts                          │  │
+│  │         ↓                                            │  │
+│  │  Validate & convert to Pydantic models               │  │
+│  │         ↓                                            │  │
+│  │  If parsing fails:                                   │  │
+│  │    • Retry with temp=0.5 (more structured)           │  │
+│  │         ↓                                            │  │
+│  │  Return: List[CharacterMapping]                      │  │
+│  └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
        │
        │ List[CharacterMapping]
@@ -200,69 +200,69 @@ This document provides visual representations of the Narrative Transformation Sy
        ▼
 ┌────────────────────────────────────────────────────────────┐
 │  PLOT TRANSFORMER                                          │
-│  ┌──────────────────────────────────────────────────────┐ │
-│  │  transform_plot(elements, world, char_mappings)      │ │
-│  │         ↓                                            │ │
-│  │  Load: prompts/plot_transformation.txt               │ │
-│  │         ↓                                            │ │
-│  │  Format context:                                     │ │
-│  │    • World description                               │ │
-│  │    • Character mappings (name → new name)            │ │
-│  │    • Original plot structure                         │ │
-│  │    • Core conflict                                   │ │
-│  │         ↓                                            │ │
-│  │  ┌──────────────────────────────────────┐            │ │
-│  │  │  Gemini LLM API Call                 │            │ │
-│  │  │  • Temperature: 0.75                 │            │ │
-│  │  │  • Max Tokens: 6000                  │            │ │
-│  │  └──────────────────────────────────────┘            │ │
-│  │         ↓                                            │ │
-│  │  Validate response contains "## Act"                 │ │
-│  │         ↓                                            │ │
-│  │  Parse using regex:                                  │ │
-│  │    • Find act headers (## Act N: Name)               │ │
-│  │    • Extract emotional arc                           │ │
-│  │    • Extract numbered key events                     │ │
-│  │    • Extract theme manifestation                     │ │
-│  │         ↓                                            │ │
-│  │  If 0 acts found:                                    │ │
-│  │    • Retry with temp=0.5                             │ │
-│  │         ↓                                            │ │
-│  │  Return: List[TransformedPlotAct]                    │ │
-│  └──────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  transform_plot(elements, world, char_mappings)      │  │
+│  │         ↓                                            │  │
+│  │  Load: prompts/plot_transformation.txt               │  │
+│  │         ↓                                            │  │
+│  │  Format context:                                     │  │
+│  │    • World description                               │  │
+│  │    • Character mappings (name → new name)            │  │
+│  │    • Original plot structure                         │  │
+│  │    • Core conflict                                   │  │
+│  │         ↓                                            │  │
+│  │  ┌──────────────────────────────────────┐            │  │
+│  │  │  Gemini LLM API Call                 │            │  │
+│  │  │  • Temperature: 0.75                 │            │  │
+│  │  │  • Max Tokens: 6000                  │            │  │
+│  │  └──────────────────────────────────────┘            │  │
+│  │         ↓                                            │  │
+│  │  Validate response contains "## Act"                 │  │
+│  │         ↓                                            │  │
+│  │  Parse using regex:                                  │  │
+│  │    • Find act headers (## Act N: Name)               │  │
+│  │    • Extract emotional arc                           │  │
+│  │    • Extract numbered key events                     │  │
+│  │    • Extract theme manifestation                     │  │
+│  │         ↓                                            │  │
+│  │  If 0 acts found:                                    │  │
+│  │    • Retry with temp=0.5                             │  │
+│  │         ↓                                            │  │
+│  │  Return: List[TransformedPlotAct]                    │  │
+│  └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
        │
        │ List[TransformedPlotAct] (3 acts)
        │
        ▼
 ┌────────────────────────────────────────────────────────────┐
-│  CONSISTENCY VALIDATOR ⭐                                  │
-│  ┌──────────────────────────────────────────────────────┐ │
-│  │  run_consistency_check(all_components)               │ │
-│  │         ↓                                            │ │
-│  │  Check 1: Character Consistency                      │ │
-│  │    • Scan plot for original names                    │ │
-│  │    • Ensure new names are used                       │ │
-│  │         ↓                                            │ │
-│  │  Check 2: Theme Preservation                         │ │
-│  │    • Verify theme manifestations exist               │ │
-│  │    • Count theme mentions across acts                │ │
-│  │         ↓                                            │ │
-│  │  Check 3: World Consistency                          │ │
-│  │    • Extract world elements (tech, startup, etc.)    │ │
-│  │    • Verify plot references world                    │ │
-│  │         ↓                                            │ │
-│  │  Check 4: Narrative Structure                        │ │
-│  │    • Validate 3 acts present                         │ │
-│  │    • Check each act has events (min 2)               │ │
-│  │    • Verify emotional arcs defined                   │ │
-│  │         ↓                                            │ │
-│  │  Categorize issues: critical, warning, info          │ │
-│  │         ↓                                            │ │
-│  │  Generate summary & pass/fail status                 │ │
-│  │         ↓                                            │ │
-│  │  Return: ConsistencyReport                           │ │
-│  └──────────────────────────────────────────────────────┘ │
+│  CONSISTENCY VALIDATOR                                     │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  run_consistency_check(all_components)               │  │
+│  │         ↓                                            │  │
+│  │  Check 1: Character Consistency                      │  │
+│  │    • Scan plot for original names                    │  │
+│  │    • Ensure new names are used                       │  │
+│  │         ↓                                            │  │
+│  │  Check 2: Theme Preservation                         │  │
+│  │    • Verify theme manifestations exist               │  │
+│  │    • Count theme mentions across acts                │  │
+│  │         ↓                                            │  │
+│  │  Check 3: World Consistency                          │  │
+│  │    • Extract world elements (tech, startup, etc.)    │  │
+│  │    • Verify plot references world                    │  │
+│  │         ↓                                            │  │
+│  │  Check 4: Narrative Structure                        │  │
+│  │    • Validate 3 acts present                         │  │
+│  │    • Check each act has events (min 2)               │  │
+│  │    • Verify emotional arcs defined                   │  │
+│  │         ↓                                            │  │
+│  │  Categorize issues: critical, warning, info          │  │
+│  │         ↓                                            │  │
+│  │  Generate summary & pass/fail status                 │  │
+│  │         ↓                                            │  │
+│  │  Return: ConsistencyReport                           │  │
+│  └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
        │
        │ ConsistencyReport
@@ -270,26 +270,26 @@ This document provides visual representations of the Narrative Transformation Sy
        ▼
 ┌────────────────────────────────────────────────────────────┐
 │  OUTPUT ASSEMBLER                                          │
-│  ┌──────────────────────────────────────────────────────┐ │
-│  │  assemble_final_output(all_components)               │ │
-│  │         ↓                                            │ │
-│  │  Format markdown sections:                           │ │
-│  │    1. Title & Overview                               │ │
-│  │    2. World-Building (overview + details + themes)   │ │
-│  │    3. Character Mapping (table + rationales)         │ │
-│  │    4. Plot Reinterpretation (3 acts)                 │ │
-│  │    5. Creative Rationale                             │ │
-│  │    6. Consistency Validation Results                 │ │
-│  │    7. Metadata (timestamp, counts)                   │ │
-│  │         ↓                                            │ │
-│  │  Format character table with tabulate                │ │
-│  │         ↓                                            │ │
-│  │  Add timestamps & generation metadata                │ │
-│  │         ↓                                            │ │
-│  │  Save to: output/reimagined_story.md                 │ │
-│  │         ↓                                            │ │
-│  │  Return: file path                                   │ │
-│  └──────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  assemble_final_output(all_components)               │  │
+│  │         ↓                                            │  │
+│  │  Format markdown sections:                           │  │
+│  │    1. Title & Overview                               │  │
+│  │    2. World-Building (overview + details + themes)   │  │
+│  │    3. Character Mapping (table + rationales)         │  │
+│  │    4. Plot Reinterpretation (3 acts)                 │  │
+│  │    5. Creative Rationale                             │  │
+│  │    6. Consistency Validation Results                 │  │
+│  │    7. Metadata (timestamp, counts)                   │  │
+│  │         ↓                                            │  │
+│  │  Format character table with tabulate                │  │
+│  │         ↓                                            │  │
+│  │  Add timestamps & generation metadata                │  │
+│  │         ↓                                            │  │
+│  │  Save to: output/reimagined_story.md                 │  │
+│  │         ↓                                            │  │
+│  │  Return: file path                                   │  │
+│  └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
        │
        ▼
@@ -314,26 +314,26 @@ This document provides visual representations of the Narrative Transformation Sy
            │
            ▼
     ┌──────────────┐
-    │StoryElements │◄──────────────────┐
-    │  • title     │                   │
-    │  • themes    │                   │
-    │  • characters│                   │
-    │  • plot      │                   │
-    └──────┬───────┘                   │
-           │                           │
-           │ + target_world            │
-           │                           │
-           ▼                           │
+    │StoryElements │◄─────────────────┐
+    │  • title     │                  │
+    │  • themes    │                  │
+    │  • characters│                  │
+    │  • plot      │                  │
+    └──────┬───────┘                  │
+           │                          │
+           │ + target_world           │
+           │                          │
+           ▼                          │
     ┌──────────────┐                  │
     │ WorldSetting │                  │ Context Flow
     │  • overview  │                  │
     │  • details   │──────────────────┤
     │  • themes    │                  │
     └──────┬───────┘                  │
-           │                           │
-           │ + original characters     │
-           │                           │
-           ▼                           │
+           │                          │
+           │ + original characters    │
+           │                          │
+           ▼                          │
 ┌──────────────────────┐              │
 │ CharacterMapping[]   │              │
 │  • original → new    │              │
@@ -341,10 +341,10 @@ This document provides visual representations of the Narrative Transformation Sy
 │  • traits            │              │
 │  • motivation        │              │
 └──────────┬───────────┘              │
-           │                           │
-           │ + original plot           │
-           │                           │
-           ▼                           │
+           │                          │
+           │ + original plot          │
+           │                          │
+           ▼                          │
 ┌──────────────────────┐              │
 │ TransformedPlotAct[] │              │
 │  • act_name          │              │
@@ -352,10 +352,10 @@ This document provides visual representations of the Narrative Transformation Sy
 │  • key_events        │              │
 │  • themes            │              │
 └──────────┬───────────┘              │
-           │                           │
-           │ All components            │
-           │                           │
-           ▼                           │
+           │                          │
+           │ All components           │
+           │                          │
+           ▼                          │
 ┌──────────────────────┐              │
 │ ConsistencyReport    │              │
 │  • issues[]          │──────────────┘
@@ -378,7 +378,7 @@ This document provides visual representations of the Narrative Transformation Sy
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  PROMPT TEMPLATE SYSTEM                                    │
+│                 PROMPT TEMPLATE SYSTEM                     │
 └────────────────────────────────────────────────────────────┘
 
 For each transformation stage:
@@ -430,7 +430,7 @@ For each transformation stage:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  LLM API CALL WRAPPER                                   │
+│                 LLM API CALL WRAPPER                    │
 └─────────────────────────────────────────────────────────┘
 
 Attempt 1: Normal Parameters
@@ -480,7 +480,7 @@ Exception Handling:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  CONSISTENCY VALIDATION PIPELINE                        │
+│           CONSISTENCY VALIDATION PIPELINE               │
 └─────────────────────────────────────────────────────────┘
 
 Input: All Generated Components
@@ -565,41 +565,41 @@ Input: All Generated Components
 ## Technology Stack Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  APPLICATION LAYER                                      │
-│  ┌───────────┐  ┌───────────┐  ┌──────────┐           │
-│  │  run.py   │  │CLI Tools  │  │ Testing  │           │
-│  └─────┬─────┘  └─────┬─────┘  └────┬─────┘           │
+┌────────────────────────────────────────────────────────┐
+│                APPLICATION LAYER                       │
+│  ┌───────────┐  ┌───────────┐  ┌──────────┐            │
+│  │  run.py   │  │CLI Tools  │  │ Testing  │            │
+│  └─────┬─────┘  └─────┬─────┘  └────┬─────┘            │
 └────────┼──────────────┼─────────────┼──────────────────┘
          │              │             │
 ┌────────┼──────────────┼─────────────┼──────────────────┐
-│  BUSINESS LOGIC LAYER                                   │
-│        │              │             │                   │
-│  ┌─────▼──────┐ ┌────▼─────┐ ┌────▼──────┐            │
+│               BUSINESS LOGIC LAYER                     │
+│        │              │             │                  │
+│  ┌─────▼──────┐ ┌────▼──────┐ ┌────▼──────┐            │
 │  │ extractor  │ │transformer│ │ validator │            │
-│  └─────┬──────┘ └────┬──────┘ └────┬──────┘            │
-│        │             │              │                   │
+│  └─────┬──────┘ └────┬──────┘ └─────┬─────┘            │
+│        │             │              │                  │
 │  ┌─────▼─────────────▼──────────────▼──────┐           │
-│  │         assembler.py                     │           │
-│  └──────────────────────────────────────────┘           │
-└─────────────────────────────────────────────────────────┘
+│  │         assembler.py                    │           │
+│  └─────────────────────────────────────────┘           │
+└────────────────────────────────────────────────────────┘
          │              │             │
 ┌────────┼──────────────┼─────────────┼──────────────────┐
-│  FRAMEWORK LAYER                                        │
-│        │              │             │                   │
-│  ┌─────▼──────┐ ┌────▼─────┐ ┌────▼──────┐            │
-│  │ Pydantic   │ │LangChain │ │  Rich     │            │
-│  │ (Models)   │ │(Prompts) │ │ (Display) │            │
-│  └────────────┘ └──────────┘ └───────────┘            │
-└─────────────────────────────────────────────────────────┘
+│                  FRAMEWORK LAYER                       │
+│        │              │             │                  │
+│  ┌─────▼──────┐  ┌────▼─────┐  ┌────▼──────┐           │
+│  │ Pydantic   │  │LangChain │  │  Rich     │           │
+│  │ (Models)   │  │(Prompts) │  │ (Display) │           │
+│  └────────────┘  └──────────┘  └───────────┘           │
+└────────────────────────────────────────────────────────┘
                        │
-┌──────────────────────┼──────────────────────────────────┐
-│  EXTERNAL SERVICES                                      │
-│                ┌─────▼──────┐                           │
-│                │  Gemini    │                           │
-│                │  LLM API   │                           │
-│                └────────────┘                           │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────┼─────────────────────────────────┐
+│               EXTERNAL SERVICES                        │
+│                ┌─────▼──────┐                          │
+│                │  Gemini    │                          │
+│                │  LLM API   │                          │
+│                └────────────┘                          │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -639,24 +639,23 @@ narrative-forge/
 
 ---
 
----
-
 ## Memory & State Management
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ STATELESS DESIGN - No Persistence Between Runs │
+│ STATELESS DESIGN - No Persistence Between Runs          │
 └─────────────────────────────────────────────────────────┘
+
 Run N:
 Input → Pipeline → Output
-(No memory of previous runs)
-Run N+1:
+(No memory of previous runs)Run N+1:
 Input → Pipeline → Output
 (Starts fresh, no cache)
 ┌─────────────────────────────────────────────────────────┐
-│ STATE PASSING THROUGH PIPELINE │
+│ STATE PASSING THROUGH PIPELINE                          │
 └─────────────────────────────────────────────────────────┘
 ┌──────────────┐
-│ run.py │
+│ run.py       │
 └──────┬───────┘
 │
 │ story_name, target_world
@@ -684,131 +683,141 @@ state = {}
 state['world'],
 state['characters'],
 state['plot'],
-state['report'])
-All state lives in memory during single execution.
+state['report'])All state lives in memory during single execution.
 No database, no session storage, no caching.
+```
 
 ---
 
 ## Prompt Engineering Architecture
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ PROMPT DESIGN PATTERNS │
+│ PROMPT DESIGN PATTERNS                                  │
 └─────────────────────────────────────────────────────────┘
+
 Pattern 1: STRUCTURED OUTPUT REQUEST
 ┌──────────────────────────────────┐
-│ You are an expert in X │
-│ │
-│ Your task: Transform Y into Z │
-│ │
-│ REQUIREMENTS: │
-│ 1. Specific requirement │
-│ 2. Another requirement │
-│ │
-│ OUTPUT FORMAT: │
-│ [Explicit structure] │
-│ │
+│ You are an expert in X           │
+│                                  │
+│ Your task: Transform Y into Z    │
+│                                  │
+│ REQUIREMENTS:                    │
+│ 1. Specific requirement          │
+│ 2. Another requirement           │
+│                                  │
+│ OUTPUT FORMAT:                   │
+│ [Explicit structure]             │
+│                                  │
 │ CRITICAL: [Non-negotiable rules] │
 └──────────────────────────────────┘
+
 Pattern 2: CONTEXT + TASK + FORMAT
 ┌──────────────────────────────────┐
-│ CONTEXT: │
-│ {contextual_information} │
-│ │
-│ TASK: │
-│ Transform/Generate/Map │
-│ │
-│ FORMAT: │
-│ JSON/Markdown/Structured │
+│ CONTEXT:                         │
+│ {contextual_information}         │
+│                                  │
+│ TASK:                            │
+│ Transform/Generate/Map           │
+│                                  │
+│ FORMAT:                          │
+│ JSON/Markdown/Structured         │
 └──────────────────────────────────┘
+
 Pattern 3: EXAMPLE-DRIVEN (Few-Shot)
 ┌──────────────────────────────────┐
-│ Example Input: │
-│ [sample_input] │
-│ │
-│ Example Output: │
-│ [sample_output] │
-│ │
-│ Now transform this: │
-│ [actual_input] │
+│ Example Input:                   │
+│ [sample_input]                   │
+│                                  │
+│ Example Output:                  │
+│ [sample_output]                  │
+│                                  │
+│ Now transform this:              │
+│ [actual_input]                   │
 └──────────────────────────────────┘
-Used in:
 
+Used in:
 World Building: Pattern 1 (Structured)
 Character Mapping: Pattern 2 (Context + JSON)
 Plot Transformation: Pattern 1 + Pattern 3 hybrid
+```
 
 ---
 
 ## Alternative Approaches Considered
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ APPROACH COMPARISON │
+│                APPROACH COMPARISON                      │
 └─────────────────────────────────────────────────────────┘
+
 Option A: Single Mega-Prompt
 ┌────────────────────────────────────┐
-│ Input → LLM (one call) → Output │
+│ Input → LLM (one call) → Output    │
 └────────────────────────────────────┘
 ✗ Pros: Fast (1 API call), simple
 ✗ Cons: Hard to debug, less control, all-or-nothing
-✗ Verdict: REJECTED - too brittle
-Option B: Chained Prompts (CHOSEN) ✓
+✗ Verdict: REJECTED - too brittleOption B: Chained Prompts (CHOSEN) ✓
+
 ┌────────────────────────────────────┐
 │ Input → LLM₁ → LLM₂ → LLM₃ → Output│
 └────────────────────────────────────┘
 ✓ Pros: Modular, debuggable, controllable
 ✓ Cons: More API calls, slightly slower
-✓ Verdict: CHOSEN - best balance
-Option C: Fine-Tuned Model
+✓ Verdict: CHOSEN - best balanceOption C: Fine-Tuned Model
+
 ┌────────────────────────────────────┐
-│ Input → Fine-tuned LLM → Output │
+│ Input → Fine-tuned LLM → Output    │
 └────────────────────────────────────┘
 ✗ Pros: Specialized, potentially better
 ✗ Cons: Requires training data, expensive, overkill
-✗ Verdict: REJECTED - out of scope
-Option D: Rule-Based Templates
+✗ Verdict: REJECTED - out of scopeOption D: Rule-Based Templates
+
 ┌────────────────────────────────────┐
-│ Input → Template Engine → Output │
+│ Input → Template Engine → Output   │
 └────────────────────────────────────┘
 ✗ Pros: Deterministic, fast, no API cost
 ✗ Cons: No creativity, rigid, poor quality
 ✗ Verdict: REJECTED - defeats purpose
+```
 
 ---
 
 ## Scalability Roadmap
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ CURRENT SYSTEM (v1.0) │
+│                 CURRENT SYSTEM (v1.0)                   │
 └─────────────────────────────────────────────────────────┘
 • Single story processing
 • Sequential execution
 • No caching
 • CLI interface only
 • ~60s per story
+
 ┌─────────────────────────────────────────────────────────┐
-│ PHASE 2: Performance (v2.0) │
+│              PHASE 2: Performance (v2.0)                │
 └─────────────────────────────────────────────────────────┘
 • Redis caching layer
 ├─► Cache world descriptions by (story, target)
 ├─► Cache character mappings
-└─► Reduce redundant API calls
-• Parallel processing
+└─► Reduce redundant API calls• Parallel processing
 ├─► Character mapping + Plot transformation in parallel
 └─► ~40s per story (33% faster)
+
 ┌─────────────────────────────────────────────────────────┐
-│ PHASE 3: Batch Processing (v3.0) │
+│            PHASE 3: Batch Processing (v3.0)             │
 └─────────────────────────────────────────────────────────┘
 • Process multiple stories in batch
 ├─► Queue system (Celery/RQ)
 ├─► Parallel worker processes
-└─► 10 stories in ~5 minutes
-• Database for results
+└─► 10 stories in ~5 minutes• Database for results
 ├─► Store all outputs
 ├─► Query previous transformations
 └─► Version history
+
 ┌─────────────────────────────────────────────────────────┐
-│ PHASE 4: API Service (v4.0) │
+│               PHASE 4: API Service (v4.0)               │
 └─────────────────────────────────────────────────────────┘
 REST API:
 POST /api/v1/transform
@@ -816,13 +825,11 @@ POST /api/v1/transform
 "story": "ramayana",
 "target_world": "space opera",
 "options": {...}
-}
-→ Returns: job_id
-
-GET /api/v1/status/{job_id}
+}→ Returns: job_idGET /api/v1/status/{job_id}
 → Returns: {status, progress, result}
+
 ┌─────────────────────────────────────────────────────────┐
-│ PHASE 5: Interactive Platform (v5.0) │
+│           PHASE 5: Interactive Platform (v5.0)          │
 └─────────────────────────────────────────────────────────┘
 Web UI:
 ├─► Upload custom story JSON
@@ -831,27 +838,30 @@ Web UI:
 ├─► Edit and regenerate sections
 ├─► Export to multiple formats (PDF, EPUB, HTML)
 └─► Share transformations publicly
+```
 
 ---
 
 ## Monitoring & Observability
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ CURRENT MONITORING (CLI) │
+│               CURRENT MONITORING (CLI)                  │
 └─────────────────────────────────────────────────────────┘
+
 Console Output:
 Step 1: Extracting... ✓
 Step 2: Generating world... ✓
 Step 3: Mapping characters... ✓
 Step 4: Transforming plot... ✓
 Step 5: Validating... ✓
-Step 6: Assembling... ✓
-Debug Mode:
+Step 6: Assembling... ✓Debug Mode:
 [Debug] Raw LLM Output: ...
 [Debug] Parsed N acts
 [Warning] JSON parsing issue
+
 ┌─────────────────────────────────────────────────────────┐
-│ PRODUCTION MONITORING (Future) │
+│             PRODUCTION MONITORING (Future)              │
 └─────────────────────────────────────────────────────────┘
 Metrics to Track:
 ├─► API Latency
@@ -877,8 +887,8 @@ Metrics to Track:
 └─► System Health
 ├─► API availability
 ├─► Response times
-└─► Error rates
-Logging:
+└─► Error ratesLogging:
+
 Structured logs (JSON format)
 {
 "timestamp": "2025-01-15T10:30:00Z",
@@ -890,73 +900,84 @@ Structured logs (JSON format)
 "retry_count": 0,
 "status": "success"
 }
+
 Alerting:
 ├─► API error rate > 10%
 ├─► Latency > 120s
 ├─► Consistency validation fail rate > 20%
 └─► Daily cost > threshold
+```
 
 ---
 
 ## Security Architecture
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ SECURITY LAYERS │
+│                    SECURITY LAYERS                      │
 └─────────────────────────────────────────────────────────┘
+
 Layer 1: Secrets Management
 ┌────────────────────────────────┐
-│ .env file (local dev) │
-│ ├─► GOOGLE_API_KEY │
-│ └─► Not in git (.gitignore) │
-│ │
-│ Production: │
-│ ├─► AWS Secrets Manager │
-│ ├─► Environment variables │
-│ └─► Rotated regularly │
+│ .env file (local dev)          │
+│ ├─► GOOGLE_API_KEY             │
+│ └─► Not in git (.gitignore)    │
+│                                │
+│ Production:                    │
+│ ├─► AWS Secrets Manager        │
+│ ├─► Environment variables      │
+│ └─► Rotated regularly          │
 └────────────────────────────────┘
+
 Layer 2: Input Validation
 ┌────────────────────────────────┐
-│ Story JSON validation │
-│ ├─► Schema check (Pydantic) │
-│ ├─► Required fields present │
-│ └─► Data type validation │
-│ │
-│ User input sanitization │
-│ ├─► No code injection │
-│ ├─► Length limits │
-│ └─► Allowed characters │
+│ Story JSON validation          │
+│ ├─► Schema check (Pydantic)    │
+│ ├─► Required fields present    │
+│ └─► Data type validation       │
+│                                │
+│ User input sanitization        │
+│ ├─► No code injection          │
+│ ├─► Length limits              │
+│ └─► Allowed characters         │
 └────────────────────────────────┘
+
 Layer 3: API Security
 ┌────────────────────────────────┐
-│ Rate limiting │
-│ ├─► Max 100 requests/hour │
-│ └─► Prevents abuse │
-│ │
-│ Request size limits │
-│ ├─► Max input tokens │
-│ └─► Max output tokens │
+│ Rate limiting                  │
+│ ├─► Max 100 requests/hour      │
+│ └─► Prevents abuse             │
+│                                │
+│ Request size limits            │
+│ ├─► Max input tokens           │
+│ └─► Max output tokens          │
 └────────────────────────────────┘
+
 Layer 4: Output Safety
 ┌────────────────────────────────┐
-│ Content filtering │
-│ ├─► No PII in outputs │
+│ Content filtering              │
+│ ├─► No PII in outputs          │
 │ ├─► Inappropriate content check│
-│ └─► Copyright compliance │
+│ └─► Copyright compliance       │
 └────────────────────────────────┘
+
 Layer 5: File System
 ┌────────────────────────────────┐
-│ Restricted write permissions │
-│ ├─► Output to ./output/ only │
-│ └─► No arbitrary file writes │
+│ Restricted write permissions   │
+│ ├─► Output to ./output/ only   │
+│ └─► No arbitrary file writes   │
 └────────────────────────────────┘
+```
 
 ---
 
 ## Testing Strategy Diagram
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ TESTING PYRAMID │
+│ TESTING PYRAMID                                         │
 └─────────────────────────────────────────────────────────┘
+
 ┌─────┐
 │ E2E │ (1-2 tests)
 └─────┘
@@ -966,7 +987,7 @@ Real API calls
 Manual verification
 │
 ┌────────┴────────┐
-│ Integration │ (5-10 tests)
+│   Integration   │ (5-10 tests)
 └─────────────────┘
 │
 Component interactions
@@ -974,86 +995,94 @@ Mock LLM responses
 Validate data flow
 │
 ┌─────────────┴─────────────┐
-│ Unit Tests │ (20+ tests)
-└────────────────────────────┘
+│ Unit Tests  │ (20+ tests) │
+└───────────────────────────┘
 │
 Individual function testing
 Pydantic model validation
 Helper function correctness
+
 ┌─────────────────────────────────────────────────────────┐
-│ TEST COVERAGE BY COMPONENT │
+│             TEST COVERAGE BY COMPONENT                  │
 └─────────────────────────────────────────────────────────┘
+
 extractor.py:
 ✓ load_story_metadata()
 ✓ extract_story_elements()
 ✓ get_character_summary()
 ✓ get_plot_summary()
-✓ Pydantic model validation
-transformer.py:
+✓ Pydantic model validationtransformer.py:
 ✓ initialize_llm()
 ✓ generate_new_setting() with mock
 ✓ map_characters() with mock
 ✓ transform_plot() with mock
 ✓ parse_plot_acts()
-✓ clean_incomplete_sentences()
-validator.py:
+✓ clean_incomplete_sentences()validator.py:
 ✓ validate_character_consistency()
 ✓ validate_theme_preservation()
 ✓ validate_world_consistency()
 ✓ validate_narrative_structure()
-✓ run_consistency_check()
-assembler.py:
+✓ run_consistency_check()assembler.py:
 ✓ format_character_table()
 ✓ format_plot_acts()
 ✓ assemble_final_output()
 ✓ save_output()
+```
 
 ---
 
 ## Key Design Principles
 
+```
 ┌─────────────────────────────────────────────────────────┐
-│ 1. MODULARITY │
+│                    1. MODULARITY                        │
 └─────────────────────────────────────────────────────────┘
 Each component has single responsibility
 Clean interfaces between modules
 Easy to test, debug, and replace
+
 ┌─────────────────────────────────────────────────────────┐
-│ 2. REPRODUCIBILITY │
+│                  2. REPRODUCIBILITY                     │
 └─────────────────────────────────────────────────────────┘
 Timestamp every generation
 Store metadata (model, params, version)
 Same input + seed = same output (where possible)
+
 ┌─────────────────────────────────────────────────────────┐
-│ 3. OBSERVABILITY │
+│                   3. OBSERVABILITY                      │
 └─────────────────────────────────────────────────────────┘
 Rich console output for progress
 Debug mode for detailed inspection
 Consistency reports for quality
+
 ┌─────────────────────────────────────────────────────────┐
-│ 4. FAIL-FAST WITH CLEAR ERRORS │
+│             4. FAIL-FAST WITH CLEAR ERRORS              │
 └─────────────────────────────────────────────────────────┘
 Validate at every step
 Descriptive error messages
 Debug info in exceptions
+
 ┌─────────────────────────────────────────────────────────┐
-│ 5. GRACEFUL DEGRADATION │
+│               5. GRACEFUL DEGRADATION                   │
 └─────────────────────────────────────────────────────────┘
 Retry with adjusted parameters
 Fallback strategies (temp adjustment)
 Warnings vs blocking errors
+
 ┌─────────────────────────────────────────────────────────┐
-│ 6. TYPE SAFETY │
+│                    6. TYPE SAFETY                       │
 └─────────────────────────────────────────────────────────┘
 Pydantic models everywhere
 Early validation of data
 Self-documenting code
+
 ┌─────────────────────────────────────────────────────────┐
-│ 7. PROMPT AS CODE │
+│                  7. PROMPT AS CODE                      │
 └─────────────────────────────────────────────────────────┘
 Prompts in separate files
 Version controlled
 Easy to iterate and A/B test
+```
 
 ---
 
