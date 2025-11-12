@@ -46,7 +46,7 @@ python3 -m utils.transformer
 
 ```
 narrative-forge/
-├── run.py                  # does nothing -- will clean the codebase
+├── main.py                 # Entrypoint.. run this file
 ├── utils/
 │   ├── extractor.py        # Story element extraction
 │   ├── transformer.py      # Character & plot transformation
